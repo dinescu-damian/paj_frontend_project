@@ -1,0 +1,12 @@
+<div class="container">
+  <img
+    class="image"
+    src="https://yocto.scrolller.com/part-2-the-world-needs-more-desktop-wallpapers-8p83s1oiwj.jpg"
+  />
+  <div class="semi-transparent"></div>
+  <button nz-button nzType="primary" class="logoutButton" (click)="logout()">
+    Logout
+  </button>
+  <h1 class="title">Welcome back to your trips journal!</h1>
+</div>
+<app-trips-dashboard [listOfTrips]="listOfTrips"></app-trips-dashboard>

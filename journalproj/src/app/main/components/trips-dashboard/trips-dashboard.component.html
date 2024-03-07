@@ -1,0 +1,114 @@
+<button
+  nz-button
+  nzType="primary"
+  class="addTripButton"
+  (click)="onAddTripClick()"
+>
+  Add trip
+</button>
+<div class="pagination-content">
+  <div class="actionButtons">
+    <a
+      class="sortByButton"
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzClickHide]="false"
+      [(nzVisible)]="visible"
+    >
+      Sort by
+      <span nz-icon nzType="down"></span>
+    </a>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-submenu nzTitle="City">
+          <ul>
+            <li nz-menu-item (click)="sortByCityAscending()">Ascending</li>
+            <li nz-menu-item (click)="sortByCityDescending()">Descending</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Country">
+          <ul>
+            <li nz-menu-item (click)="sortByCountryAscending()">Ascending</li>
+            <li nz-menu-item (click)="sortByCountryDescending()">Descending</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Date">
+          <ul>
+            <li nz-menu-item (click)="sortByDateDescending()">Most recent</li>
+            <li nz-menu-item (click)="sortByDateAscending()">Oldest first</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Spending">
+          <ul>
+            <li nz-menu-item (click)="sortBySpendingDescending()">
+              Most expensive
+            </li>
+            <li nz-menu-item (click)="sortBySpendingAscending()">
+              Least expensive
+            </li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Rating">
+          <ul>
+            <li nz-menu-item (click)="sortByRatingDescending()">
+              Most appreciated
+            </li>
+            <li nz-menu-item (click)="sortByRatingAscending()">
+              Least appreciated
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <div class="prevNextButtons">
+      <button
+        nz-button
+        nzType="primary"
+        class="pagination-button"
+        (click)="previous()"
+      >
+        ❮
+      </button>
+      <button
+        nz-button
+        nzType="primary"
+        class="pagination-button"
+        (click)="next()"
+      >
+        ❯
+      </button>
+    </div>
+  </div>
+  <div class="search-bar">
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input
+        type="text"
+        name="search"
+        nz-input
+        placeholder="Search for a trip by any field value from card"
+        autocomplete="off"
+        [(ngModel)]="searchText"
+      />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <span nz-icon nzType="search"></span>
+    </ng-template>
+  </div>
+  <app-add-edit-trip-modal
+    [isVisible]="isAddEditTripModalOpen"
+    [isEditingEnabled]="isEditingEnabled"
+    (closeModal)="isAddEditTripModalOpen = false"
+  ></app-add-edit-trip-modal>
+  <div *ngIf="listOfTrips.length !== 0" class="trips-list">
+    <div *ngFor="let elem of currentPageTrips">
+      <app-trip-card
+        [tripListing]="elem"
+        (emitDeleteTripId)="deleteTrip($event)"
+        (openViewDetailsModal)="onOpenViewDetailsModal()"
+      ></app-trip-card>
+    </div>
+  </div>
+  <h1 *ngIf="listOfTrips.length === 0" class="empty-trips-list-warning">
+    No trips available!
+  </h1>
+</div>
