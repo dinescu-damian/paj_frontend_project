@@ -55,8 +55,7 @@ export class TripService {
     const response = await fetch(`${this.baseURL}/getAllForUser`, {
       method: 'GET',
       headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${this.authService.user?.JWT}`,
+        Accept: 'application/json'
       },
     });
 
@@ -80,8 +79,7 @@ export class TripService {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authService.user?.JWT}`,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         tripId: tripId,
@@ -105,8 +103,7 @@ export class TripService {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authService.user?.JWT}`,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         userId: this.authService.user?.id,
@@ -147,8 +144,7 @@ export class TripService {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authService.user?.JWT}`,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         tripId: editedTrip.tripID,
@@ -180,8 +176,7 @@ export class TripService {
     const response = await fetch(`${this.baseURL}/getById/?tripId=${tripId}`, {
       method: 'GET',
       headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${this.authService.user?.JWT}`,
+        Accept: 'application/json'
       },
     });
 

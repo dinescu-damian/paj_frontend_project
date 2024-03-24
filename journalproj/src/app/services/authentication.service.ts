@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user.interface';
 import { LoginCredentials } from '../authentication/interfaces/login-credentials.interface';
 import { RegisterCredentials } from '../authentication/interfaces/register-credentials.interface';
-import { jwtDecode } from 'jwt-decode';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,7 @@ export class AuthenticationService {
 
   private currentUser: User | null = null;
 
-  private baseURL = 'http://localhost:5000/api/Users';
-
-  constructor() { 
+  constructor(private configService: ConfigService) { 
     // Check for stored credentials
     const storedData = localStorage.getItem("RememberedUser");
     if(storedData){
@@ -24,21 +22,16 @@ export class AuthenticationService {
   async login(credentials: LoginCredentials, rememberMe: boolean) {
     try{
       const response = await fetch(
-        `${this.baseURL}/login`,
+        `${this.configService.baseURL}/auth/login`,
         {
           method: "POST",
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            ...credentials
-          }),
+            'Authorization': 'Basic ' + window.btoa(`${credentials.email}:${credentials.password}`)
+          }
         }
       );
 
-      const token = (await response.json()).token;
-      this.currentUser = this.decodeJWT(token);
+      console.log(response);
 
       // If the rememberMe option is checked, store user credentials in local storage
       if(rememberMe)
@@ -56,7 +49,7 @@ export class AuthenticationService {
     try
     {
       const response = await fetch(
-        `${this.baseURL}/register`,
+        `${this.configService.baseURL}/auth/register`,
         {
           method: "POST",
           headers: {
@@ -72,9 +65,6 @@ export class AuthenticationService {
         }
       );
       
-      const token = (await response.json()).token;
-      this.currentUser = this.decodeJWT(token);
-
       return response.status;
     } catch(error){
       console.error(error);
@@ -95,15 +85,5 @@ export class AuthenticationService {
   }
   get isAuthenticated() : boolean {
     return this.currentUser ? true : false;
-  }
-
-
-  decodeJWT(token: string) : User | null {
-    const decoded = jwtDecode<any>(token);
-    return {
-      id: decoded.nameid,
-      email: decoded.name,
-      JWT: token,
-    };
   }
 }
