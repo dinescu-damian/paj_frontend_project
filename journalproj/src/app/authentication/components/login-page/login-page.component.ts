@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CredentialsValidators } from '../../helpers/credentials-validators';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -12,7 +13,6 @@ import { CredentialsValidators } from '../../helpers/credentials-validators';
 export class LoginPageComponent implements OnInit {
 
   loginForm!: FormGroup;
-  successStatusCode = 200;
   loginIsBeingRequested = false;
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {
@@ -29,8 +29,7 @@ export class LoginPageComponent implements OnInit {
   initializeForm() {
     this.loginForm = new FormGroup({
       email: new FormControl<string>('', [Validators.required, CredentialsValidators.emailValidator]),
-      password: new FormControl<string>('', [Validators.required]),
-      rememberMe: new FormControl<boolean>(false),
+      password: new FormControl<string>('', [Validators.required])
     });
   }
 
@@ -41,13 +40,13 @@ export class LoginPageComponent implements OnInit {
     }
 
     this.loginIsBeingRequested = true;
-    this.authenticationService.login(credentials, this.loginForm.value.rememberMe).then(
+    this.authenticationService.login(credentials).then(
       statusCode => {
         this.loginIsBeingRequested = false;
         // If the user has logged in successfully, redirect to the main page
-        if(statusCode === this.successStatusCode)
+        if(statusCode === HttpStatusCode.Ok)
           return;
-          //this.navigateToMain();
+          this.navigateToMain();
       }
     );
   }

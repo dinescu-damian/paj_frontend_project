@@ -4,19 +4,18 @@ import { Subject } from 'rxjs';
 import {v4 as uuidv4} from 'uuid';
 
 import { AuthenticationService } from './authentication.service';
+import { ConfigService } from './config.service';
 @Injectable({
   providedIn: 'root',
 })
 export class TripService {
-  private baseURL = 'http://localhost:5000/api/Trips';
-
   private listOfTripsData!: Trip[];
   listOfTripsSubject = new Subject<Trip[]>();
 
   private edited: Trip = this.emptyTrip();
   editedTripsubject = new Subject<Trip>();
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, private configService: ConfigService) {}
 
   //getter
   get editedTrip() {
@@ -52,7 +51,7 @@ export class TripService {
 
   //request trips for user from backend
   async requestTrips() {
-    const response = await fetch(`${this.baseURL}/getAllForUser`, {
+    const response = await fetch(`${this.configService.baseURL}/getAllForUser`, {
       method: 'GET',
       headers: {
         Accept: 'application/json'
@@ -75,7 +74,7 @@ export class TripService {
 
   //delete trip from db
   async deleteTrip(tripId: string) {
-    const response = await fetch(`${this.baseURL}/delete`, {
+    const response = await fetch(`${this.configService.baseURL}/delete`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -99,7 +98,7 @@ export class TripService {
 
   //add a new trip into db
   async addNewTrip(newTrip: Trip) {
-    const response = await fetch(`${this.baseURL}/create`, {
+    const response = await fetch(`${this.configService.baseURL}/create`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -140,7 +139,7 @@ export class TripService {
 
   //update trip in db
   async updateTrip(editedTrip: Trip) {
-    const response = await fetch(`${this.baseURL}/edit`, {
+    const response = await fetch(`${this.configService.baseURL}/edit`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -173,7 +172,7 @@ export class TripService {
 
   //get trip by id
   async getTripById(tripId: string): Promise<Trip | null> {
-    const response = await fetch(`${this.baseURL}/getById/?tripId=${tripId}`, {
+    const response = await fetch(`${this.configService.baseURL}/getById/?tripId=${tripId}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json'

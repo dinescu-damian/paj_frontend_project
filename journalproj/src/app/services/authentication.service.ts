@@ -3,6 +3,7 @@ import { User } from '../interfaces/user.interface';
 import { LoginCredentials } from '../authentication/interfaces/login-credentials.interface';
 import { RegisterCredentials } from '../authentication/interfaces/register-credentials.interface';
 import { ConfigService } from './config.service';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +13,9 @@ export class AuthenticationService {
   private currentUser: User | null = null;
 
   constructor(private configService: ConfigService) { 
-    // Check for stored credentials
-    const storedData = localStorage.getItem("RememberedUser");
-    if(storedData){
-      this.currentUser = JSON.parse(storedData);
-    }
   }
 
-  async login(credentials: LoginCredentials, rememberMe: boolean) {
+  async login(credentials: LoginCredentials) {
     try{
       const response = await fetch(
         `${this.configService.baseURL}/auth/login`,
@@ -31,12 +27,13 @@ export class AuthenticationService {
         }
       );
 
-      console.log(response);
+      if(response.status == HttpStatusCode.Ok) {
 
-      // If the rememberMe option is checked, store user credentials in local storage
-      if(rememberMe)
-        localStorage.setItem("RememberedUser", JSON.stringify(this.currentUser));
-
+        const userData = await response.json();
+        this.currentUser = userData as User;        
+        console.log(this.currentUser);
+      }
+      
       return response.status;
     } catch(error){
       console.error(error);
@@ -74,8 +71,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    // Remove the remembered user (nothing will happen if there is no remembered user)
-    localStorage.removeItem("RememberedUser");
+    // TODO: request to backend to delete the HttpOnly token cookie
 
     this.currentUser = null;
   }
