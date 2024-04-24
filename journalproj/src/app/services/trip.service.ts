@@ -51,7 +51,7 @@ export class TripService {
 
   //request trips for user from backend
   async requestTrips() {
-    const response = await fetch(`${this.configService.baseURL}/trips`, {
+    const response = await fetch(`${this.configService.baseURL}/trips/my-trips`, {
       method: 'GET',
       headers: {
         Accept: 'application/json'
