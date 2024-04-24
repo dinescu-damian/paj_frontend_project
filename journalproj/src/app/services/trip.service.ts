@@ -51,7 +51,7 @@ export class TripService {
 
   //request trips for user from backend
   async requestTrips() {
-    const response = await fetch(`${this.configService.baseURL}/getAllForUser`, {
+    const response = await fetch(`${this.configService.baseURL}/trips`, {
       method: 'GET',
       headers: {
         Accept: 'application/json'
@@ -60,14 +60,15 @@ export class TripService {
 
     this.listOfTrips = (await response.json()).map((trip: any) => {
       return {
-        userID: trip.userId,
-        tripID: trip.tripId,
-        city: trip.name,
+        //userID: trip.userId,
+        tripID: trip.trip_id,
+        city: trip.city,
         country: trip.country,
         date: trip.date,
         spending: trip.spending,
         rating: trip.rating,
-        description: '',
+        likes: trip.likes,
+        description: trip.description
       };
     });
   }
@@ -112,6 +113,7 @@ export class TripService {
         spending: newTrip.spending,
         rating: newTrip.rating,
         description: newTrip.description,
+        likes: 0
       }),
     });
 
@@ -129,6 +131,7 @@ export class TripService {
         date: trip.date,
         spending: trip.spending,
         rating: trip.rating,
+        likes: trip.likes,
         description: trip.description,
       };
 
@@ -190,6 +193,7 @@ export class TripService {
         date: trip.date,
         spending: trip.spending,
         rating: trip.rating,
+        likes: trip.likes,
         description: trip.description,
       };
     }

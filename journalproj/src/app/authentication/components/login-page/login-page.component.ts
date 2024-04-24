@@ -45,7 +45,6 @@ export class LoginPageComponent implements OnInit {
         this.loginIsBeingRequested = false;
         // If the user has logged in successfully, redirect to the main page
         if(statusCode === HttpStatusCode.Ok)
-          return;
           this.navigateToMain();
       }
     );

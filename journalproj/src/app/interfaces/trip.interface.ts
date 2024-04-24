@@ -6,6 +6,7 @@ export interface Trip {
     date: string;
     spending: number;
     rating: number;
+    likes: number;
     description:string;
   }
   

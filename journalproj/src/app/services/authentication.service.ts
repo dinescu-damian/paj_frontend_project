@@ -28,7 +28,6 @@ export class AuthenticationService {
       );
 
       if(response.status == HttpStatusCode.Ok) {
-
         const userData = await response.json();
         this.currentUser = userData as User;        
         console.log(this.currentUser);
