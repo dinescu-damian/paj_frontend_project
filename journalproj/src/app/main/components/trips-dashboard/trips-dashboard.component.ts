@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TripComment } from 'src/app/interfaces/comment.interface';
 import { Trip } from 'src/app/interfaces/trip.interface';
 import { TripService } from 'src/app/services/trip.service';
 
@@ -19,6 +20,10 @@ export class TripsDashboardComponent {
 
   isAddEditTripModalOpen: boolean = false;
   isEditingEnabled: boolean = false;
+
+  // Flag for opening and closing the comments modal
+  isCommentsModalOpen: boolean = false;
+  displayedComments: TripComment[] = [];
 
   constructor(private tripService: TripService) {}
 
@@ -191,6 +196,12 @@ export class TripsDashboardComponent {
   onOpenViewDetailsModal() {
     this.isAddEditTripModalOpen = true;
     this.isEditingEnabled = false;
+  }
+
+  onOpenCommentsModal(comments: TripComment[]) {
+    this.displayedComments.length = 0;
+    this.displayedComments.push(...comments);
+    this.isCommentsModalOpen = true;
   }
 
   onAddTripClick() {

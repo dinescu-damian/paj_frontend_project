@@ -5,6 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigService } from './config.service';
+import { TripComment } from '../interfaces/comment.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -60,7 +61,7 @@ export class TripService {
 
     this.listOfTrips = (await response.json()).map((trip: any) => {
       return {
-        //userID: trip.userId,
+        userID: trip.userId,
         tripID: trip.trip_id,
         city: trip.city,
         country: trip.country,
@@ -71,6 +72,30 @@ export class TripService {
         description: trip.description
       };
     });
+  }
+
+  async getComments(tripId: string): Promise<TripComment[] | null> {
+    let comments!: TripComment[];
+    const response = await fetch(`${this.configService.baseURL}/comments/?tripId=${tripId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+    });
+
+    if (response.status === 200) {
+      const responseData = await response.json();
+
+      comments = responseData.map((commentJson: any) => {
+        return {
+          userID: commentJson.userId,
+          tripID: tripId,
+          content: commentJson.content
+        };
+      });
+    }
+
+    return comments;
   }
 
   //delete trip from db

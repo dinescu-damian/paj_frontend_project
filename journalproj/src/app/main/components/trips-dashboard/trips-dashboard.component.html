@@ -79,6 +79,7 @@
       </button>
     </div>
   </div>
+
   <div class="search-bar">
     <nz-input-group [nzSuffix]="suffixIconSearch">
       <input
@@ -94,17 +95,26 @@
       <span nz-icon nzType="search"></span>
     </ng-template>
   </div>
+
   <app-add-edit-trip-modal
     [isVisible]="isAddEditTripModalOpen"
     [isEditingEnabled]="isEditingEnabled"
     (closeModal)="isAddEditTripModalOpen = false"
   ></app-add-edit-trip-modal>
+  
+  <app-comments-modal 
+    [isVisible]="isCommentsModalOpen" 
+    [comments]="displayedComments"
+    (closeModal)="isCommentsModalOpen = false">
+  </app-comments-modal>
+
   <div *ngIf="listOfTrips.length !== 0" class="trips-list">
     <div *ngFor="let elem of currentPageTrips">
       <app-trip-card
         [tripListing]="elem"
         (emitDeleteTripId)="deleteTrip($event)"
         (openViewDetailsModal)="onOpenViewDetailsModal()"
+        (openCommentsModal)="onOpenCommentsModal($event)"
       ></app-trip-card>
     </div>
   </div>

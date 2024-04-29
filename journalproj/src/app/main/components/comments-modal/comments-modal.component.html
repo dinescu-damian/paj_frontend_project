@@ -1,0 +1,19 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  (nzOnCancel)="onClose()"
+  [nzClosable]="false"
+  [nzFooter]="modalFooter"
+>
+  <ng-container *nzModalContent>
+    <h2 *ngIf="comments.length == 0">
+        No comments
+    </h2>
+    <div *ngFor="let comment of comments">
+        <p>{{comment.content}}</p>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter>
+    <span nz-icon nzType="close-circle" class="close-icon" nzTheme="outline" (click)="onClose()"></span>
+  </ng-template>
+</nz-modal>

@@ -4,11 +4,15 @@
     <span nz-icon nzType="flag" nzTheme="outline"></span>
     {{ tripListing.country }}
   </p>
+  <p class="likes">
+    <span nz-icon nzType="like" nzTheme="outline"></span>
+    {{ tripListing.likes }}
+  </p>
   <p class="date">
     <span nz-icon nzType="calendar" nzTheme="outline"></span>
     {{ tripListing.date }}
   </p>
-  <p class="date">
+  <p class="spending">
     <span nz-icon nzType="dollar" nzTheme="outline"></span>
     {{ tripListing.spending }}
   </p>
@@ -16,21 +20,12 @@
     <span nz-icon nzType="star" nzTheme="outline"></span>
     {{ tripListing.rating }}
   </p>
+  <p class="description">
+    {{ tripListing.description }}
+  </p>
   <div class="button-row">
-    <button
-      nz-button
-      nzType="primary"
-      class="detailsButton"
-      (click)="onViewDetailsClick(tripListing.tripID)"
-    >
-      View details
-    </button>
-    <button nz-button nzType="default" class="deleteButton" nzTheme="outline">
-      <span
-        nz-icon
-        nzType="delete"
-        (click)="onDeleteTripClick(tripListing.tripID)"
-      ></span>
-    </button>
+    <span nz-icon nzType="edit" class="editButton" (click)="onViewDetailsClick(tripListing)"></span>
+    <span nz-icon nzType="comment" class="commentsButton" (click)="onViewCommentsClick(tripListing.tripID)"></span>
+    <span nz-icon nzType="delete" class="deleteButton" (click)="onDeleteTripClick(tripListing.tripID)"></span>
   </div>
 </div>
