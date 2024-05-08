@@ -31,8 +31,9 @@ export class RegisterPageComponent implements OnInit {
       email: new FormControl<string>('', [Validators.required, CredentialsValidators.emailValidator]),
       password: new FormControl<string>('', [Validators.required]),
       confirmPassword: new FormControl<string>('', [Validators.required]),
-      firstName: new FormControl<string>('', [Validators.required]),
-      lastName: new FormControl<string>('', [Validators.required]),
+      name: new FormControl<string>('', [Validators.required]),
+      location: new FormControl<string>('', [Validators.required]),
+      age: new FormControl<number>(0, [Validators.required])
     }, {
       validators: CredentialsValidators.passwordConfirmationValidator()
     });
@@ -42,8 +43,9 @@ export class RegisterPageComponent implements OnInit {
     const credentials = {
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
-      firstName: this.registerForm.value.firstName,
-      lastName: this.registerForm.value.lastName,
+      name: this.registerForm.value.name,
+      location: this.registerForm.value.location,
+      age: this.registerForm.value.age
     }
 
     this.registerIsBeingRequested = true;
@@ -75,10 +77,13 @@ export class RegisterPageComponent implements OnInit {
   get confirmPassword(): FormControl {
     return this.registerForm.get('confirmPassword') as FormControl;
   }
-  get firstName(): FormControl {
-    return this.registerForm.get('firstName') as FormControl;
+  get name(): FormControl {
+    return this.registerForm.get('name') as FormControl;
   }
-  get lastName(): FormControl {
-    return this.registerForm.get('lastName') as FormControl;
+  get location(): FormControl {
+    return this.registerForm.get('location') as FormControl;
+  }
+  get age(): FormControl {
+    return this.registerForm.get('age') as FormControl;
   }
 }

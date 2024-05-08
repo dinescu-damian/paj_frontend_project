@@ -55,8 +55,9 @@ export class AuthenticationService {
           body: JSON.stringify({
             email: credentials.email,
             password: credentials.password,
-            name: credentials.firstName,
-            surname: credentials.lastName,
+            name: credentials.name,
+            location: credentials.location,
+            age: credentials.age
           }),
         }
       );
