@@ -69,7 +69,7 @@ export class AddEditTripModalComponent {
     this.tripService.editedTrip.description =
       this.tripEditForm.value.description;
 
-    this.tripService.updateOrCreateTrip(this.tripService.editedTrip);
+    this.tripService.saveTrip(this.tripService.editedTrip);
 
     this.closeModal.emit(true);
   }

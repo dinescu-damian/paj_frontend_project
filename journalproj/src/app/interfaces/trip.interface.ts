@@ -8,5 +8,5 @@ export interface Trip {
     rating: number;
     likes: number;
     description:string;
-  }
+}
   

@@ -40,7 +40,7 @@ export class TripService {
   emptyTrip(): any {
     return {
       userID: '1',
-      tripID: uuidv4(),
+      tripID: '0',
       city: '',
       country: '',
       date: '',
@@ -100,15 +100,12 @@ export class TripService {
 
   //delete trip from db
   async deleteTrip(tripId: string) {
-    const response = await fetch(`${this.configService.baseURL}/delete`, {
+    const response = await fetch(`${this.configService.baseURL}/trips/delete/${tripId}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        tripId: tripId,
-      }),
+      }
     });
 
     if (response.status === 200) {
@@ -122,9 +119,9 @@ export class TripService {
     }
   }
 
-  //add a new trip into db
-  async addNewTrip(newTrip: Trip) {
-    const response = await fetch(`${this.configService.baseURL}/create`, {
+  // Save trip to the database
+  async saveTrip(trip: Trip) {
+    const response = await fetch(`${this.configService.baseURL}/trips/save`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -132,12 +129,12 @@ export class TripService {
       },
       body: JSON.stringify({
         userId: this.authService.user?.id,
-        name: newTrip.city,
-        country: newTrip.country,
-        date: newTrip.date,
-        spending: newTrip.spending,
-        rating: newTrip.rating,
-        description: newTrip.description,
+        city: trip.city,
+        country: trip.country,
+        date: trip.date,
+        spending: trip.spending,
+        rating: trip.rating,
+        description: trip.description,
         likes: 0
       }),
     });
@@ -165,42 +162,9 @@ export class TripService {
     }
   }
 
-  //update trip in db
-  async updateTrip(editedTrip: Trip) {
-    const response = await fetch(`${this.configService.baseURL}/edit`, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        tripId: editedTrip.tripID,
-        userId: this.authService.user?.id,
-        name: editedTrip.city,
-        country: editedTrip.country,
-        date: editedTrip.date,
-        spending: editedTrip.spending,
-        rating: editedTrip.rating,
-        description: editedTrip.description,
-      }),
-    });
-
-    if (response.status === 200) {
-      console.log('Trip updated successfully');
-
-      this.listOfTrips.splice(
-        this.listOfTrips.findIndex((item) => item.tripID === editedTrip.tripID),
-        1,
-        editedTrip
-      );
-
-      this.listOfTripsSubject.next(this.listOfTrips);
-    }
-  }
-
   //get trip by id
   async getTripById(tripId: string): Promise<Trip | null> {
-    const response = await fetch(`${this.configService.baseURL}/getById/?tripId=${tripId}`, {
+    const response = await fetch(`${this.configService.baseURL}/trips/getById/${tripId}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json'
@@ -223,16 +187,5 @@ export class TripService {
       };
     }
     return null;
-  }
-
-  //main function used for adding/editing a trip
-  async updateOrCreateTrip(tripToBeUpdated: Trip) {
-    //if trip doesn't exist, we add it into database
-    if ((await this.getTripById(tripToBeUpdated.tripID)) == null) {
-      this.addNewTrip(tripToBeUpdated);
-    } else {
-      //else, we update it
-      this.updateTrip(tripToBeUpdated);
-    }
   }
 }
