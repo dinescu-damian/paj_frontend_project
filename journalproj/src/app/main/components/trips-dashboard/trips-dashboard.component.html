@@ -108,7 +108,7 @@
     (closeModal)="isCommentsModalOpen = false">
   </app-comments-modal>
 
-  <div *ngIf="listOfTrips.length !== 0" class="trips-list">
+  <div *ngIf="tripService.listOfTrips.length !== 0" class="trips-list">
     <div *ngFor="let elem of currentPageTrips">
       <app-trip-card
         [tripListing]="elem"
@@ -118,7 +118,7 @@
       ></app-trip-card>
     </div>
   </div>
-  <h1 *ngIf="listOfTrips.length === 0" class="empty-trips-list-warning">
+  <h1 *ngIf="tripService.listOfTrips.length === 0" class="empty-trips-list-warning">
     No trips available!
   </h1>
 </div>

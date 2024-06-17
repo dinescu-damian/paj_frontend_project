@@ -66,8 +66,7 @@ export class AddEditTripModalComponent {
     this.tripService.editedTrip.date = this.tripEditForm.value.date;
     this.tripService.editedTrip.spending = this.tripEditForm.value.spending;
     this.tripService.editedTrip.rating = this.tripEditForm.value.rating;
-    this.tripService.editedTrip.description =
-      this.tripEditForm.value.description;
+    this.tripService.editedTrip.description = this.tripEditForm.value.description;
 
     this.tripService.saveTrip(this.tripService.editedTrip);
 

@@ -10,23 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-  listOfTrips: Trip[] = [];
-
   constructor(
-    private tripService: TripService,
     private authenticationService: AuthenticationService,
     private router: Router
-  ) {
-    // Listen for any changes in the trips list
-    this.tripService.listOfTripsSubject.subscribe((res) => {
-      this.listOfTrips = [...res];
-    });
-  }
-
-  ngOnInit(): void {
-    //request list of trips 
-    this.tripService.requestTrips();
-  }
+  ) {}
 
   logout() {
     // Log the user out

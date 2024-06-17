@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../interfaces/trip.interface';
-import { Subject } from 'rxjs';
+import { Subject, exhaustAll } from 'rxjs';
 import {v4 as uuidv4} from 'uuid';
 
 import { AuthenticationService } from './authentication.service';
@@ -10,7 +10,7 @@ import { TripComment } from '../interfaces/comment.interface';
   providedIn: 'root',
 })
 export class TripService {
-  private listOfTripsData!: Trip[];
+  private listOfTripsData: Trip[] = [];
   listOfTripsSubject = new Subject<Trip[]>();
 
   private edited: Trip = this.emptyTrip();
@@ -39,8 +39,7 @@ export class TripService {
   //empty trip
   emptyTrip(): any {
     return {
-      userID: '1',
-      tripID: '0',
+      tripID: null,
       city: '',
       country: '',
       date: '',
@@ -62,16 +61,18 @@ export class TripService {
     this.listOfTrips = (await response.json()).map((trip: any) => {
       return {
         userID: trip.userId,
-        tripID: trip.trip_id,
+        tripID: trip.tripId,
         city: trip.city,
         country: trip.country,
-        date: trip.date,
+        date: this.formatDate(trip.date),
         spending: trip.spending,
         rating: trip.rating,
         likes: trip.likes,
         description: trip.description
       };
     });
+
+    console.log(this.listOfTrips);
   }
 
   async getComments(tripId: string): Promise<TripComment[] | null> {
@@ -116,6 +117,8 @@ export class TripService {
         1
       );
       this.listOfTripsSubject.next(this.listOfTrips);
+
+      console.log(this.listOfTrips)
     }
   }
 
@@ -128,6 +131,7 @@ export class TripService {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        tripId: trip.tripID,
         userId: this.authService.user?.id,
         city: trip.city,
         country: trip.country,
@@ -148,17 +152,21 @@ export class TripService {
       const newAddedTrip= {
         userID: trip.userId,
         tripID: trip.tripId,
-        city: trip.name,
+        city: trip.city,
         country: trip.country,
-        date: trip.date,
+        date: this.formatDate(trip.date),
         spending: trip.spending,
         rating: trip.rating,
         likes: trip.likes,
         description: trip.description,
       };
 
-      this.listOfTrips.push(newAddedTrip);
-      this.listOfTripsSubject.next(this.listOfTrips);
+      const existing = this.listOfTrips.filter(currentTrip => currentTrip.tripID == trip.tripId);
+      if(existing.length == 0) {
+        this.listOfTrips.push(newAddedTrip);
+        console.log(this.listOfTrips);
+        this.listOfTripsSubject.next(this.listOfTrips);
+      }
     }
   }
 
@@ -179,7 +187,7 @@ export class TripService {
         tripID: trip.tripId,
         city: trip.name,
         country: trip.country,
-        date: trip.date,
+        date: this.formatDate(trip.date),
         spending: trip.spending,
         rating: trip.rating,
         likes: trip.likes,
@@ -187,5 +195,14 @@ export class TripService {
       };
     }
     return null;
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear().toString();
+
+    return `${day}/${month}/${year}`;
   }
 }
