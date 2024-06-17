@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Trip } from 'src/app/interfaces/trip.interface';
-import { TripService } from 'src/app/services/trip.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
 

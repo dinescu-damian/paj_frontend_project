@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../interfaces/trip.interface';
-import { Subject, exhaustAll } from 'rxjs';
-import {v4 as uuidv4} from 'uuid';
+import { Subject } from 'rxjs';
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigService } from './config.service';
-import { TripComment } from '../interfaces/comment.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -73,30 +71,6 @@ export class TripService {
     });
 
     console.log(this.listOfTrips);
-  }
-
-  async getComments(tripId: string): Promise<TripComment[] | null> {
-    let comments!: TripComment[];
-    const response = await fetch(`${this.configService.baseURL}/comments/?tripId=${tripId}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json'
-      },
-    });
-
-    if (response.status === 200) {
-      const responseData = await response.json();
-
-      comments = responseData.map((commentJson: any) => {
-        return {
-          userID: commentJson.userId,
-          tripID: tripId,
-          content: commentJson.content
-        };
-      });
-    }
-
-    return comments;
   }
 
   //delete trip from db

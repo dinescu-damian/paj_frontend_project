@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { TripService } from 'src/app/services/trip.service';
 import { Trip } from 'src/app/interfaces/trip.interface';
-import { TripComment } from 'src/app/interfaces/comment.interface';
 
 @Component({
   selector: 'app-trip-card',
@@ -21,7 +20,6 @@ export class TripCardComponent {
   emitDeleteTripId: EventEmitter<string> = new EventEmitter();
 
   @Output() openViewDetailsModal: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() openCommentsModal: EventEmitter<TripComment[]> = new EventEmitter<TripComment[]>();
 
   constructor(private tripService: TripService) {}
 
@@ -40,13 +38,5 @@ export class TripCardComponent {
 
     //emit event for open details modal
     this.openViewDetailsModal.emit();
-  }
-
-  async onViewCommentsClick(tripId: string) {
-    // Get the comments for the selected trip
-    const comments = await this.tripService.getComments(tripId);
-
-    if (comments != null) 
-      this.openCommentsModal.emit(comments);
   }
 }

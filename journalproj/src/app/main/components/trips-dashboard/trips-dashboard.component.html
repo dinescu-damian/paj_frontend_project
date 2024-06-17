@@ -102,19 +102,12 @@
     (closeModal)="isAddEditTripModalOpen = false"
   ></app-add-edit-trip-modal>
   
-  <app-comments-modal 
-    [isVisible]="isCommentsModalOpen" 
-    [comments]="displayedComments"
-    (closeModal)="isCommentsModalOpen = false">
-  </app-comments-modal>
-
   <div *ngIf="tripService.listOfTrips.length !== 0" class="trips-list">
     <div *ngFor="let elem of currentPageTrips">
       <app-trip-card
         [tripListing]="elem"
         (emitDeleteTripId)="deleteTrip($event)"
         (openViewDetailsModal)="onOpenViewDetailsModal()"
-        (openCommentsModal)="onOpenCommentsModal($event)"
       ></app-trip-card>
     </div>
   </div>

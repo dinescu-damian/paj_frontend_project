@@ -7,7 +7,6 @@ import { TripCardComponent } from './components/trip-card/trip-card.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { TripsDashboardComponent } from './components/trips-dashboard/trips-dashboard.component';
 import { AddEditTripModalComponent } from './components/add-edit-trip-modal/add-edit-trip-modal.component';
-import { CommentsModalComponent } from './components/comments-modal/comments-modal.component';
 
 //ng zorro
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -26,8 +25,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     TripCardComponent,
     MainPageComponent,
     TripsDashboardComponent,
-    AddEditTripModalComponent,
-    CommentsModalComponent
+    AddEditTripModalComponent
   ],
   imports: [
     CommonModule,
