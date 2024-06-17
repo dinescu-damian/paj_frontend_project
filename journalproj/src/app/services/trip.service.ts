@@ -65,7 +65,6 @@ export class TripService {
         date: this.formatDate(trip.date),
         spending: trip.spending,
         rating: trip.rating,
-        likes: trip.likes,
         description: trip.description
       };
     });
@@ -112,8 +111,7 @@ export class TripService {
         date: trip.date,
         spending: trip.spending,
         rating: trip.rating,
-        description: trip.description,
-        likes: 0
+        description: trip.description
       }),
     });
 
@@ -131,7 +129,6 @@ export class TripService {
         date: this.formatDate(trip.date),
         spending: trip.spending,
         rating: trip.rating,
-        likes: trip.likes,
         description: trip.description,
       };
 
@@ -164,7 +161,6 @@ export class TripService {
         date: this.formatDate(trip.date),
         spending: trip.spending,
         rating: trip.rating,
-        likes: trip.likes,
         description: trip.description,
       };
     }
