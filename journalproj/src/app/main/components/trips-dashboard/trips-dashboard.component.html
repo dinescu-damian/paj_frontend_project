@@ -80,22 +80,6 @@
     </div>
   </div>
 
-  <div class="search-bar">
-    <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input
-        type="text"
-        name="search"
-        nz-input
-        placeholder="Search for a trip by any field value from card"
-        autocomplete="off"
-        [(ngModel)]="searchText"
-      />
-    </nz-input-group>
-    <ng-template #suffixIconSearch>
-      <span nz-icon nzType="search"></span>
-    </ng-template>
-  </div>
-
   <app-add-edit-trip-modal
     [isVisible]="isAddEditTripModalOpen"
     [isEditingEnabled]="isEditingEnabled"
