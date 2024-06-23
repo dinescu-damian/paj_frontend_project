@@ -4,14 +4,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(to right, #28313B, #485461);
+    background-image: linear-gradient(to right, #BE93C5, #7BC6CC);
 
     .form-input {
         width: 100%;
         border-radius: 10px;
         padding: 5px;
-        background-color: #48515b;
-        color: white;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        border: none;
+    }
+
+    .form-header {
+        text-align: center;
+        color: rgb(0, 0, 0);
     }
 
     input::placeholder {
@@ -19,15 +25,24 @@
     }
 
     .login-form {
-        padding: 30px;
+        padding: 70px;
         border-radius: 20px;
-        box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 0px 15px rgba(104, 104, 104, 0.5);
+        background-color: #ededed;
     }
     
     .login-form-button {
         margin-left: auto;
         margin-right: auto;
         display: block;
+        background-color: #BE93C5;
+        color: white;
+        border-radius: 10px;
+        border: none;
+    }
+
+    .login-form-button:hover {
+        background-color: #7BC6CC;
     }
     
     .additional-options-container {
@@ -35,12 +50,23 @@
         margin-top: 10px;
         color: white;
     
-        .register-navigator {
-            &:hover {
-                text-decoration: underline;
-            }
-            margin-left: 10px;
+        .register-button {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            padding: 5px;
+            display: block;
+            background-color: #7BC6CC;
+            color: white;
+            border-radius: 10px;
+            border: none;
         }
+
+        .register-button:hover {
+            background-color: #5DA3B4;
+        }
+
+
     }
 
     nz-spin {

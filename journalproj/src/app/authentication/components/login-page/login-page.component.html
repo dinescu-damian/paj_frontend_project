@@ -1,5 +1,6 @@
 <div class="form-container">
     <form nz-form [formGroup]="loginForm" class="login-form" (submit)="submitForm()">
+        <h1 class="form-header">Welcome!</h1>
         <nz-form-item>
             <nz-form-control>
                 <nz-input-group>
@@ -38,7 +39,7 @@
         <div *ngIf="!loginIsBeingRequested">
             <button nz-button class="login-form-button" [nzType]="'primary'" [disabled]="!loginForm.valid">Log in</button>
             <div class="additional-options-container">
-                <a class="register-navigator" (click)="navigateToRegister()">Register now!</a>
+                <button class="register-button" (click)="navigateToRegister()">Register now!</button>
             </div>
         </div>
         <nz-spin *ngIf="loginIsBeingRequested" nzSimple [nzSize]="'large'"></nz-spin>
