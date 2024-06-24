@@ -8,10 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
+  user: any;
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-  ) {}
+  ) {
+    // Save the user's name into a variable
+    this.user = this.authenticationService.user;
+    console.log(this.user);
+    
+  }
 
   logout() {
     // Log the user out

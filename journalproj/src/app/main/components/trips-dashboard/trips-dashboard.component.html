@@ -1,11 +1,3 @@
-<button
-  nz-button
-  nzType="primary"
-  class="addTripButton"
-  (click)="onAddTripClick()"
->
-  Add trip
-</button>
 <div class="pagination-content">
   <div class="actionButtons">
     <a
@@ -18,6 +10,14 @@
       Sort by
       <span nz-icon nzType="down"></span>
     </a>
+    <button
+      nz-button
+      nzType="primary"
+      class="addTripButton"
+      (click)="onAddTripClick()"
+    >
+      Add trip
+    </button>
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
         <li nz-submenu nzTitle="City">
